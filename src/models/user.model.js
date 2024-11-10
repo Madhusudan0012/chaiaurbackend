@@ -65,4 +65,32 @@ userSchema.methods.isPasswordCorrect = async function(password){
     return await bcrypt.compare(password , this.password)
 }
 
+const jwt = require('jsonwebtoken');
+
+userSchema.methods.generateAccessToken = function() {
+    return jwt.sign(
+        {
+            _id: this._id,
+            email: this.email,
+            username: this.username,
+            fullname: this.fullname
+        },
+        process.env.ACCESS_TOKEN_SECRET, // Ensure this secret key is set in your environment variables
+        { expiresIn: process.env.ACCESS_TOKEN_SECRET }     // Optional: Set an expiration time for the token
+    );
+};
+
+
+
+userSchema.methods.generateRefreshToken = function(){
+    return jwt.sign(
+        {
+            _id: this._id,
+            
+        },
+        process.env.REFRESH_TOKEN_SECRET, // Ensure this secret key is set in your environment variables
+        { expiresIn: process.env.REFRESH_TOKEN_SECRET }     // Optional: Set an expiration time for the token
+    );
+    
+}
 export const User = mongoose.model("User" , userSchema);
