@@ -1,16 +1,15 @@
 import { v2 as cloudinary } from 'cloudinary';
 
 (async function() {
-
     // Configuration
     cloudinary.config({ 
-        cloud_name: 'madhusudan-cloud', 
-        api_key: '918847391665996', 
-        api_secret: '0wzaX77sA_sl2PbGv2eE8e5hSbo' // Click 'View API Keys' above to copy your API secret
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+        api_key: process.env.CLOUDINARY_API_KEY, 
+        api_secret: process.env.CLOUDINARY_API_SECRET
     });
-    
-    // Upload an image
-     const uploadResult = await cloudinary.uploader
+
+       // Upload an image
+       const uploadResult = await cloudinary.uploader
        .upload(
            'https://res.cloudinary.com/demo/image/upload/getting-started/shoes.jpg', {
                public_id: 'shoes',
@@ -40,3 +39,4 @@ import { v2 as cloudinary } from 'cloudinary';
     
     console.log(autoCropUrl);    
 })();
+
