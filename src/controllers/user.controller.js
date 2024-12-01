@@ -2,7 +2,7 @@ import { asyncHandler } from "../utils/asycHandler.js";
 import {ApiError} from "../utils/ApiError.js"
 import {User } from "../models/user.model.js"
 import {Apiresponse} from "../utils/ApiResponse.js"
-
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 const registerUser = asyncHandler( async ( req, res)=>{
     //get a details from frontend
     //validations- not empty
@@ -32,7 +32,7 @@ const registerUser = asyncHandler( async ( req, res)=>{
     }
 
     
-    const existedUser = User.findOne({
+    const existedUser = await User.findOne({
         $or: [{username} , {email}]
     })
     console.log(existedUser);
