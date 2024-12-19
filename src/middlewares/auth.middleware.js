@@ -1,7 +1,34 @@
 //only verify user exist or not 
+import { ApiError } from "../utils/ApiError";
 import {asycHandler} from "../utils/asycHandler";
+// import {jwt} from "JsonWebToken";
+import jwt from "jsonwebtoken";
+import { User } from "../models/user.model";
 
 
 export const verifyJWT = asycHandler(async(req, res , next) =>{
-    const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer" , "")
+  try {
+      const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer" , "")
+  
+      if(!token){
+          throw new ApiError(401 , "Unauthorized request")
+      }
+      const decodedToken = jwt.verify(token , proccess.env.ACCESS_TOKEN_SECRET )
+  
+      const user =  await User.findById(decodedToken?._id).select("-password -refreshToken")
+  
+      if(!user){
+          // TODO: Discuss about frontend
+          throw new ApiError(401 , "Invalid Access Token")
+  
+      }
+      req.user = user;
+      next()
+  } catch (error) {
+    throw new ApiError(401 , error ?.message || "Invalid Access Token ")
+    
+  }
+    //Middleware 
+    //Routes  
+    
 })
