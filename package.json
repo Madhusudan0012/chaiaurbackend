@@ -13,7 +13,7 @@
   ],
   "author": "Madhusudan Singh Chauhan",
   "license": "ISC",
-  "description": "",
+  "description": "basic app to deploy",
   "devDependencies": {
     "nodemon": "^3.1.7",
     "prettier": "3.3.3"
@@ -24,7 +24,7 @@
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.21.1",
+    "express": "^4.21.2",
     "https": "^1.0.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.8.0",
